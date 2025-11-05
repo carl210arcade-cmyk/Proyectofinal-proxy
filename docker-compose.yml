@@ -1,0 +1,80 @@
+
+services:
+  # 1. Nginx Proxy Manager 
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      # Puertos para el acceso final (127.0.0.1:80/443)
+      - '80:80'      
+      - '443:443'    
+      - '81:81'      # Puerto para la interfaz de administración
+    volumes:
+      - ./npm/data:/data
+      - ./npm/letsencrypt:/etc/letsencrypt
+    networks:
+      - proxy-net
+
+  # 2. Aplicación HTML estática
+  app-html:
+    image: 'nginx:alpine'
+    container_name: app-html
+    restart: unless-stopped
+    volumes:
+      # Monta la carpeta local 'html-app'
+      - ./html-app:/usr/share/nginx/html:ro
+    networks:
+      - proxy-net
+
+  app-html2:
+    image: 'nginx:alpine'
+    container_name: app-html2
+    restart: unless-stopped
+    volumes:
+      # Monta la carpeta local 'html-app'
+      - ./html-app2:/usr/share/nginx/html:ro
+    networks:
+      - proxy-net
+
+  # 3. Odoo (ERP/Web App)
+  odoo:
+    image: 'odoo:16.0' 
+    container_name: odoo-app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - HOST=db
+      - USER=odoo
+      # CAMBIO 1: La contraseña debe ser IDÉNTICA a la DB (te la simplifiqué a 'tecno')
+      - PASSWORD=tecno 
+      - ODOO_EXTRA_ARGS=--proxy-mode --workers 0
+      # CAMBIO 2: Variable de espera (opcional, ayuda si la DB es lenta)
+      - WAIT_HOSTS=db:5432 
+    volumes:
+      - ./odoo/config:/etc/odoo
+      - ./odoo/data:/var/lib/odoo
+    networks:
+      - proxy-net
+    # El puerto interno de Odoo es el 8069
+
+  # 4. Base de datos para Odoo (PostgreSQL)
+  db:
+    image: 'postgres:13'
+    container_name: odoo-db
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      # CAMBIO 1: La contraseña ahora es 'tecno'
+      - POSTGRES_PASSWORD=tecno 
+      - POSTGRES_USER=odoo
+    volumes:
+      # CAMBIO 3: Especificamos el Subdirectorio 'db'
+      - ./odoo/db:/var/lib/postgresql/data
+    networks:
+      - proxy-net
+      
+networks:
+  proxy-net:
+    driver: bridge

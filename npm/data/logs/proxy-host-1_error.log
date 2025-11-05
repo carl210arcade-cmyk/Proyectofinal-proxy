@@ -1,0 +1,4 @@
+2025/10/26 00:25:20 [error] 201#201: *9 app.html could not be resolved (3: Host not found), client: 172.18.0.1, server: app-html.lan, request: "GET / HTTP/1.1", host: "app-html.lan"
+2025/10/26 00:25:21 [error] 201#201: *9 app.html could not be resolved (3: Host not found), client: 172.18.0.1, server: app-html.lan, request: "GET /favicon.ico HTTP/1.1", host: "app-html.lan", referrer: "http://app-html.lan/"
+2025/10/26 00:27:13 [warn] 249#249: *1534 using uninitialized "server" variable while logging request, client: 127.0.0.1, server: app-html.lan, request: "GET / HTTP/1.1", host: "app-html.lan"
+2025/10/26 00:27:14 [warn] 248#248: *3022 using uninitialized "server" variable while logging request, client: 127.0.0.1, server: app-html.lan, request: "GET /favicon.ico HTTP/1.1", host: "app-html.lan"

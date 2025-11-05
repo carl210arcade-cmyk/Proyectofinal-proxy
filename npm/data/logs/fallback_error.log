@@ -1,0 +1,2 @@
+2025/10/26 00:45:15 [error] 202#202: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.1, server: nginxproxymanager, request: "GET /api/tokens HTTP/1.1", upstream: "http://127.0.0.1:3000/tokens", host: "127.0.0.1:81", referrer: "http://127.0.0.1:81/"
+2025/10/26 01:58:15 [error] 274#274: *1846 open() "/var/www/html/app.html.lan" failed (2: No such file or directory), client: 172.18.0.1, server: localhost-nginx-proxy-manager, request: "GET /app.html.lan HTTP/1.1", host: "127.0.0.1"

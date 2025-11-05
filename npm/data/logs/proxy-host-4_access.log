@@ -1,0 +1,1 @@
+[03/Nov/2025:16:54:55 +0000] - 200 200 - GET http app.sitio.lan "/" [Client 172.18.0.1] [Length 1698] [Gzip 4.15] [Sent-to app-html2] "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" "-"
